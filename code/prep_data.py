@@ -51,72 +51,7 @@ det_k = pd.read_excel(PATH + "data/downloads/detailnonres_stk1.xlsx",
 cols_no_sum = ["Asset Codes", 
                "NIPA Asset Types",]
 
-
-
-
-##### BY INDUSTRY #####
-
-
-
-print("Aggregating investment and capital by industry.")
-
-# initialize dataframes to hold investment and capital yearly totals by industry
-industry_det_i = pd.DataFrame(columns=["Industry Code"] + list(range(START_YEAR, END_YEAR + 1)))
-industry_det_k = pd.DataFrame(columns=["Industry Code"] + list(range(START_YEAR, END_YEAR + 1)))
-
-# calculate yearly investment totals by industry
-for industry, df in raw_i.items():
-    # initialize a dictionary to hold yearly investment sums
-    curr_ind = dict()
-    curr_ind["Industry Code"] = industry
-    for year in range(START_YEAR, END_YEAR + 1):
-        equipment_tot = df.loc[df["Asset Codes"] == "EQUIPMENT", str(year)].values[0]
-        structures_tot = df.loc[df["Asset Codes"] == "STRUCTURES", str(year)].values[0]
-        ipp_tot = df.loc[df["Asset Codes"] == "IPP", str(year)].values[0]
-        curr_ind[year] = equipment_tot + structures_tot + ipp_tot
-    industry_det_i = industry_det_i._append(curr_ind, ignore_index = True)
-
-
-# calculate yearly capital totals by industry
-for industry, df in raw_k.items():
-    # initialize a dictionary to hold yearly capital sums
-    curr_ind = dict()
-    curr_ind["Industry Code"] = industry
-    for year in range(START_YEAR, END_YEAR + 1):
-        equipment_tot = df.loc[df["Asset Codes"] == "EQUIPMENT", str(year)].values[0]
-        structures_tot = df.loc[df["Asset Codes"] == "STRUCTURES", str(year)].values[0]
-        ipp_tot = df.loc[df["Asset Codes"] == "IPP", str(year)].values[0]
-        curr_ind[year] = equipment_tot + structures_tot + ipp_tot
-    industry_det_k = industry_det_k._append(curr_ind, ignore_index = True)
-
-# creating a new df for holding industry i/k values
-industry_i_over_k = pd.DataFrame(columns=["Industry Code"] + list(range(START_YEAR, END_YEAR + 1)))
-
-industry_det_i = industry_det_i.set_index("Industry Code")
-industry_det_k = industry_det_k.set_index("Industry Code")
-
-# shifting the k values one year to the right 
-# so each years i value is divided by the previous year's k value
-industry_shifted_k = industry_det_k.shift(axis = 1)
-
-# create a mask to avoid division by 0
-industry_non_zero_k = industry_shifted_k != 0
-
-# calculate i/k where prior year k is not 0, set i/k to 0 if prior year k is 0
-industry_i_over_k = industry_det_i / industry_shifted_k.where(industry_non_zero_k, 0)
-
-# fill in with NaN where prior year k is missing
-industry_i_over_k = industry_i_over_k.where(industry_non_zero_k, np.nan)
-
-# dropping empty 1947 column
-industry_i_over_k = industry_i_over_k.drop(START_YEAR, axis = 1)
-
-
-
-
 ##### BY ASSET #####
-
-
 
 
 print("Aggregating investment and capital by year.")
