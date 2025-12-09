@@ -4,6 +4,6 @@ Replication Steps:
 
 1) run "prep_data.py" to clean BEA asset level investment and capital stock data
 2) run "main.do", which calls upon:
-    a) "clean_data.do" to build the final asset-level panel with user cost, tax, and investment metrics
-    b) "regressions.do" which runs all regressions and creates coefficent figures
-    c) "figures.do" which creates descriptive figures
+    - "clean_data.do" to build the final asset-level panel with user cost, tax, and investment metrics
+    - "regressions.do" which runs all regressions and creates coefficent figures
+    - "figures.do" which creates descriptive figures
