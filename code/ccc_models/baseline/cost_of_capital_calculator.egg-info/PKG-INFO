@@ -1,6 +1,6 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: cost-of-capital-calculator
-Version: 1.5.1
+Version: 2.0.0
 Summary: CCC: A Cost of Capital Calculator
 Home-page: https://github.com/PSLmodels/Cost-of-Capital-Calculator
 Download-URL: https://github.com/PSLmodels/Cost-of-Capital-Calculator
@@ -23,6 +23,15 @@ Requires-Dist: pandas
 Requires-Dist: bokeh
 Requires-Dist: numpy
 Requires-Dist: paramtools
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: download-url
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: summary
 
 
 
@@ -81,4 +90,4 @@ Results will change as the underlying models improve. A fundamental reason for a
 
 
 ## Citing the Cost-of-Capital-Calculator Model
-Cost-of-Capital-Calculator (Version 1.5.1)[Source code], https://github.com/PSLmodels/Cost-of-Capital-Calculator
+Cost-of-Capital-Calculator (Version 1.5.2)[Source code], https://github.com/PSLmodels/Cost-of-Capital-Calculator
