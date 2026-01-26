@@ -31,6 +31,12 @@ data/ucc/main/*
 !data/ucc/main/**/
 data/ucc/bonusonly/*
 !data/ucc/bonusonly/**/
+data/ucc/qbi/*
+!data/ucc/qbi/**/
+data/ucc/qbi_tauonly/*
+!data/ucc/qbi_tauonly/**/
+data/ucc/tauonly/*
+!data/ucc/tauonly/**/
 
 ####################################
 # Optional: figures / tables outputs
