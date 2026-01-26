@@ -1,0 +1,39 @@
+####################################
+# Python
+####################################
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+.env/
+
+####################################
+# OS / editor junk
+####################################
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+####################################
+# Logs & temp files
+####################################
+*.log
+*.tmp
+*.out
+
+####################################
+# Ignore generated UCC data
+####################################
+data/ucc/main/*
+!data/ucc/main/**/
+data/ucc/bonusonly/*
+!data/ucc/bonusonly/**/
+
+####################################
+# Optional: figures / tables outputs
+####################################
+#output/*
+#!output/**/
