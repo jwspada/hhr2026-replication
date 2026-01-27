@@ -5,10 +5,10 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 # specify which ccc model to import
-sys.path.insert(0, str(REPO_ROOT / "code" / "ccc_models" / "baseline"))
+sys.path.insert(0, str(REPO_ROOT / "code" / "ccc_models" / "qbi_tauonly"))
 
 import ccc
-print("Baseline CCC:", ccc.__file__)
+print("QBI Tau Only CCC:", ccc.__file__)
 
 from ccc.data import Assets
 from ccc.parameters import Specification, DepreciationParams
@@ -34,8 +34,8 @@ def calc_ucc(years):
             REPO_ROOT
             / "data"
             / "ucc"
-            / "main"
-            / f"asset_ucc_{year}.csv"
+            / "qbi_tauonly"
+            / f"asset_ucc_qbi_{year}_tauonly.csv"
         )
         # export to csv
         ucc_asset.to_csv(filename, index = False, header = True)
