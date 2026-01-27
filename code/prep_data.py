@@ -5,11 +5,13 @@
 ### imports ###
 import pandas as pd
 import numpy as np
+import sys
+from pathlib import Path
 
 ### globals ###
 
-# update this with user's path
-PATH = "C:/Users/jspada/Dropbox/tcja/tcja_project/hhr2026_replication/"
+# set working directory
+REPO_ROOT = Path(__file__).resolve().parents[1]
 # specify range of years to calculate totals
 START_YEAR = 1952
 END_YEAR = 2023
@@ -19,12 +21,12 @@ END_YEAR = 2023
 print("Loading in data.")
 
 # load in investment data
-raw_i = pd.read_excel(PATH + "data/downloads/detailnonres_inv1.xlsx", 
+raw_i = pd.read_excel(REPO_ROOT / "data" / "downloads" / "detailnonres_inv1.xlsx", 
                       sheet_name = None, 
                       header = 5
 )
 # load in capital data
-raw_k = pd.read_excel(PATH + "data/downloads/detailnonres_stk1.xlsx", 
+raw_k = pd.read_excel(REPO_ROOT / "data" / "downloads" / "detailnonres_stk1.xlsx", 
                       sheet_name = None, 
                       header = 5
 )
@@ -36,13 +38,13 @@ for sheet in drop_sheets:
     del raw_k[sheet]
 
 # creating a df to hold investment totals by copying the format of the "110C" sheet
-det_i = pd.read_excel(PATH + "data/downloads/detailnonres_inv1.xlsx", 
+det_i = pd.read_excel(REPO_ROOT / "data" / "downloads" / "detailnonres_inv1.xlsx", 
                       sheet_name = "110C", 
                       header = 5
 )
 
 # creating a df to hold capital totals by copying the format of the "110C" sheet
-det_k = pd.read_excel(PATH + "data/downloads/detailnonres_stk1.xlsx", 
+det_k = pd.read_excel(REPO_ROOT / "data" / "downloads" / "detailnonres_stk1.xlsx", 
                       sheet_name = "110C", 
                       header = 5
 )
@@ -102,8 +104,8 @@ det_i = det_i.drop(0)
 det_k = det_k.drop(0)
 
 # export detailed i and k sheets to excel
-det_i.to_excel(PATH + "data/det_i.xlsx")
-det_k.to_excel(PATH + "data/det_k.xlsx")
+det_i.to_excel(REPO_ROOT / "data" / "det_i.xlsx")
+det_k.to_excel(REPO_ROOT / "data" / "det_k.xlsx")
 
 # creating a new df for holding i/k values
 det_i_over_k = det_i
@@ -125,7 +127,7 @@ det_i_over_k.loc[:, years] = (det_i_over_k.loc[:, years] /
 # fill in with NaN where prior year k is missing
 det_i_over_k.loc[:, years] = det_i_over_k.loc[:, years].where(non_zero_shifted_k, np.nan)
 
-det_i_over_k.to_excel(PATH + "data/det_i_over_k.xlsx")
+det_i_over_k.to_excel(REPO_ROOT / "data" / "det_i_over_k.xlsx")
 
 
 
