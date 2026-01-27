@@ -18,13 +18,16 @@ END_YEAR = 2023
 
 ### I/K CALCULATIONS ###
 
-print("Loading in data.")
+print("Loading in investment data.")
 
 # load in investment data
 raw_i = pd.read_excel(REPO_ROOT / "data" / "downloads" / "detailnonres_inv1.xlsx", 
                       sheet_name = None, 
                       header = 5
 )
+
+print("Loading in capital data.")
+
 # load in capital data
 raw_k = pd.read_excel(REPO_ROOT / "data" / "downloads" / "detailnonres_stk1.xlsx", 
                       sheet_name = None, 
