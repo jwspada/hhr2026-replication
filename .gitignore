@@ -32,11 +32,10 @@ data/ucc/**
 !data/ucc/**/.gitkeep
 
 ####################################
-# Ignore cleaned BEA investment and capital data
+# Ignore cleaned data
 ####################################
-data/det_i.xlsx
-data/det_i_over_k.xlsx
-data/det_k.xlsx
+data/**
+!data/**/
 
 ####################################
 # Optional: figures / tables outputs
