@@ -2,7 +2,7 @@
 // Author: Joseph Spada
 // Description: builds final asset-level panel with user cost, tax, and investment metrics
 
-****** import and clean i data ******
+****** import and prepare investment data (cleaned in python) ******
 
 import excel "${data}\det_i", firstrow clear
 
@@ -24,7 +24,7 @@ replace bea_asset_code = strtrim(bea_asset_code)
 save "${data}\investment.dta", replace
 
 
-****** import and clean capital stock data ******
+****** import and prepare capital stock data (cleaned in python) ******
 
 import excel "${data}\det_k", firstrow clear
 
@@ -46,7 +46,7 @@ replace bea_asset_code = strtrim(bea_asset_code)
 save "${data}\capital.dta", replace
 
 
-****** import and clean i/k data ******
+****** import and prepare i/k data (cleaned in python) ******
 
 import excel "${data}\det_i_over_k", firstrow clear
 
@@ -94,42 +94,6 @@ drop _merge
 replace tau_Ind = .37 if missing(tau_Ind) & year < 2026
 
 save "${data}\tau.dta", replace
-
-****** import and clean discount rate data ******
-
-import excel "${data}\downloads\moodys_baa_corp_bond_yield", sheet("Sheet1") firstrow clear
-
-merge 1:1 year using "$data\pi.dta"
-drop _merge
-
-merge 1:1 year using "$data\tau.dta"
-drop _merge
-
-// corporate tax rate in absence of TCJA
-gen tau_C_alt = tau_C
-replace tau_C_alt = .35 if year >= 2018
-
-// notional interest rate on the allowance for corporate equity from CCC
-gen ace_int_rate = 0.068
-
-// fraction of corporate investment financed by debt from CCC variable f_c
-gen f_C = 0.32
-
-// haircut on interest deductibility for corporate entitites from CCC variable 
-// interest_deduct_haircut_c
-gen int_haircut = 0
-
-// expected, after-tax return on corporate equity from CCC variable E_c
-gen e_C = 0.058
-
-// allowance for corporate equity from CCC variable ace_c
-gen ace = 0
-
-gen discount_rate_C = f_C * (r * (1 - (1 - int_haircut) * tau_C)) + (1 - f_C) * (e_C + pi - ace_int_rate * ace)
-
-gen discount_rate_alt = f_C * (r * (1 - (1 - int_haircut) * tau_C_alt)) + (1 - f_C) * (e_C + pi - ace_int_rate * ace)
-
-save "${data}\r.dta", replace
 
 ****** import and clean ucc tau only qbi data ******
 
@@ -269,7 +233,7 @@ export excel "${data}\ucc\asset_ucc.xlsx", replace firstrow(variables)
 
 use "${data}\ucc\asset_ucc.dta", clear
 
-// fixing ENS1 and ENS2 which are mislabeled as equipment in the CCC
+// fixing ENS1 and ENS2 which are mislabeled as equipment in the CCC, they should be IPP
 replace major_asset_group = "Intellectual Property" if bea_asset_code == "ENS1" | bea_asset_code == "ENS2"
 
 // append qbi ucc data
@@ -286,11 +250,6 @@ drop _merge
 
 // merge in inflation data
 merge m:1 year using "${data}\pi.dta"
-drop if _merge < 3
-drop _merge
-
-// merge in discount rate data
-merge m:1 year using "${data}\r.dta", keepusing(discount_rate_C discount_rate_alt)
 drop if _merge < 3
 drop _merge
 
@@ -316,7 +275,7 @@ bysort bea_asset_code: egen max_inv = max(investment)
 drop if max_inv == 0
 drop max_inv
 
-// combining 4 computer asset types with high volatility
+// creating a "COMP" asset by combining 4 computer asset types with high volatility
 expand 2 if bea_asset_code == "RD21" | bea_asset_code == "RD22" | bea_asset_code == "RD24" | bea_asset_code == "RD25", gen(COMP)
 replace bea_asset_code = "COMP" if COMP
 
@@ -329,7 +288,7 @@ foreach var in assets delta rho_mix metr_mix tax_wedge_mix z_mix rho_mix_tauonly
 } 
 
 // summing the weighted variable components together, this only affects COMP
-collapse (firstnm) asset_name major_asset_group y (sum) assets delta (firstnm) pi discount_rate_C tau_C tau_Ind k (sum) z_mix rho_mix metr_mix ucc_mix tax_wedge_mix rho_mix_tauonly ucc_mix_tauonly metr_mix_tauonly z_mix_tauonly rho_mix_bonusonly ucc_mix_bonusonly metr_mix_bonusonly z_mix_bonusonly investment capital, by(bea_asset_code tax_treat year)
+collapse (firstnm) asset_name major_asset_group y (sum) assets delta (firstnm) pi tau_C tau_Ind k (sum) z_mix rho_mix metr_mix ucc_mix tax_wedge_mix rho_mix_tauonly ucc_mix_tauonly metr_mix_tauonly z_mix_tauonly rho_mix_bonusonly ucc_mix_bonusonly metr_mix_bonusonly z_mix_bonusonly investment capital, by(bea_asset_code tax_treat year)
 
 replace asset_name = "Computer asset index" if bea_asset_code == "COMP"
 
@@ -397,7 +356,7 @@ bysort bea_asset_code year: egen weighted_metr = sum(metr_share)
 bysort bea_asset_code year: egen weighted_ucc_bonusonly = sum(ucc_bonusonly_share)
 bysort bea_asset_code year: egen weighted_ucc_tauonly = sum(ucc_tauonly_share)
 drop if tax_treat == "non-corporate"
-drop tax_treat ucc_share metr_share rho_share
+drop tax_treat ucc_share metr_share rho_share ucc_bonusonly_share ucc_tauonly_share
 
 // create variables for yearly values of variables of interest
 forvalues year = 2016(1)2023{

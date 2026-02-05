@@ -13,7 +13,7 @@ global MAX_YEAR = 2023
 
 // using weighted_ucc
 forvalues year = $MIN_YEAR(1)$MAX_YEAR{
-	di "regres `year' to 2016 investment change on `year' to 2016 ucc change"
+	di "regress `year' to 2016 investment change on `year' to 2016 ucc change"
 	reg ikchange`year'minus2016_w5 wgtd_uccchange`year'minus2016 if year == `year', robust
 	estimates store ucc`year'
 }
@@ -23,7 +23,7 @@ graph export "$output/ucc_cumulative_weighted.png", replace
 
 // using weighted_metr
 forvalues year = $MIN_YEAR(1)$MAX_YEAR{
-	di "regres `year' to 2016 investment change on `year' to 2016 metr change"
+	di "regress `year' to 2016 investment change on `year' to 2016 metr change"
 	reg ikchange`year'minus2016_w5 wgtd_metrchange`year'minus2016 if year == `year', robust
 	estimates store metr`year'
 }
@@ -36,7 +36,7 @@ graph export "$output/metr_cumulative_weighted.png", replace
 
 // using weighted_ucc
 forvalues year = $MIN_YEAR(1)$MAX_YEAR{
-	di "regres `year' to 2016 investment change on `year' to 2016 ucc change"
+	di "regress `year' to 2016 investment change on `year' to 2016 ucc change"
 	reg ikchange`year'minus2016_w5comp wgtd_uccchange`year'minus2016 if year == `year', robust
 	estimates store ucc`year'
 }
@@ -46,7 +46,7 @@ graph export "$output/ucc_cumulative_comp_weighted.png", replace
 // metr
 // weighted
 forvalues year = $MIN_YEAR(1)$MAX_YEAR{
-	di "regres `year' to 2016 investment change on `year' to 2016 metr change"
+	di "regress `year' to 2016 investment change on `year' to 2016 metr change"
 	reg ikchange`year'minus2016_w5comp wgtd_metrchange`year'minus2016 if year == `year', robust
 	estimates store metr`year'
 }
@@ -58,10 +58,10 @@ graph export "$output/metr_cumulative_comp_weighted.png", replace
 // regressing on ucc_tauonly and ucc_bonus_only
 
 forvalues year = 2018(1)2023{
-	//di "regres `year' to 2016 investment change on `year' to 2016 ucc change (tau only)"
-	//reg ikchange`year'minus2016_w5 wucctauonlychange`year'minus2016 if year == `year'
-	//di "regres `year' to 2016 investment change on `year' to 2016 ucc change (bonus only)"
-	//reg ikchange`year'minus2016_w5 wuccbonusonlychange`year'minus2016 if year == `year'
-	di "regres `year' to 2016 investment change on `year' to 2016 ucc change (tau only) and ucc change (bonus only)"
+	di "regress `year' to 2016 investment change on `year' to 2016 ucc change (tau only)"
+	reg ikchange`year'minus2016_w5 wucctauonlychange`year'minus2016 if year == `year'
+	di "regress `year' to 2016 investment change on `year' to 2016 ucc change (bonus only)"
+	reg ikchange`year'minus2016_w5 wuccbonusonlychange`year'minus2016 if year == `year'
+	di "regress `year' to 2016 investment change on `year' to 2016 ucc change (tau only) and ucc change (bonus only)"
 	reg ikchange`year'minus2016_w5 wucctauonlychange`year'minus2016 wuccbonusonlychange`year'minus2016 if year == `year'
 }
