@@ -40,5 +40,5 @@ data/**
 ####################################
 # Optional: figures / tables outputs
 ####################################
-#output/*
-#!output/**/
+output/*
+!output/**/
