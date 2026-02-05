@@ -38,6 +38,92 @@
             "section_2": {"type": "str"}
           }
     },
+    "IIT_rate": {
+        "title": "Top statutory individual income tax rate",
+        "description": "Top statutory individual income tax rate",
+        "section_1": "Individual Level Taxes",
+        "type": "float",
+        "value": [
+            {
+                "year": 1953,
+                "value": 0.92
+            },
+            {
+                "year": 1954,
+                "value": 0.91
+            },
+            {
+                "year": 1964,
+                "value": 0.77
+            },
+            {
+                "year": 1965,
+                "value": 0.70
+            },
+            {
+                "year": 1968,
+                "value": 0.7525
+            },
+            {
+                "year": 1969,
+                "value": 0.77
+            },
+            {
+                "year": 1970,
+                "value": 0.7175
+            },
+            {
+                "year": 1971,
+                "value": 0.70
+            },
+            {
+                "year": 1981,
+                "value": 0.69125
+            },
+            {
+                "year": 1982,
+                "value": 0.50
+            },
+            {
+                "year": 1987,
+                "value": 0.385
+            },
+            {
+                "year": 1988,
+                "value": 0.28
+            },
+            {
+                "year": 1991,
+                "value": 0.31
+            },
+            {
+                "year": 1993,
+                "value": 0.396
+            },
+            {
+                "year": 2001,
+                "value": 0.391
+            },
+            {
+                "year": 2002,
+                "value": 0.386
+            },
+            {
+                "year": 2003,
+                "value": 0.35
+            },
+            {
+                "year": 2013,
+                "value": 0.396
+            }
+        ],
+        "validators": {
+            "range": {
+                "min": 0.0,
+                "max": 1.0
+            }
+        }
+    },
     "CIT_rate": {
         "title": "Top statutory corporate income tax rate",
         "description": "Top statutory corporate income tax rate",
