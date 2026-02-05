@@ -38,7 +38,12 @@ data/**
 !data/**/
 
 ####################################
-# Optional: figures / tables outputs
+# Ignore figures / tables outputs
 ####################################
 output/*
 !output/**/
+
+####################################
+# Ignore STATA swap files
+####################################
+code/*.stswp
