@@ -118,8 +118,8 @@ class Specification(paramtools.Parameters):
         # Set rate of 1st layer of taxation on investment income
         self.u = {"c": self.CIT_rate}
         self.u_d = {"c": self.CIT_rate_ded}
-        self.u["pt"] = self.IIT_rate
-        self.u_d["pt"] = self.IIT_rate
+        self.u["pt"] = self.IIT_rate * 0.8
+        self.u_d["pt"] = self.IIT_rate * 0.8
         E_dict = {"c": self.E_c, "pt": E_pt}
 
         # Allowance for Corporate Equity

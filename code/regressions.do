@@ -58,10 +58,10 @@ graph export "$output/metr_cumulative_comp_weighted.png", replace
 // regressing on ucc_tauonly and ucc_bonus_only
 
 forvalues year = 2018(1)2023{
-	di "regress `year' to 2016 investment change on `year' to 2016 ucc change (tau only)"
-	reg ikchange`year'minus2016_w5 wucctauonlychange`year'minus2016 if year == `year'
-	di "regress `year' to 2016 investment change on `year' to 2016 ucc change (bonus only)"
-	reg ikchange`year'minus2016_w5 wuccbonusonlychange`year'minus2016 if year == `year'
+	//di "regress `year' to 2016 investment change on `year' to 2016 ucc change (tau only)"
+	//reg ikchange`year'minus2016_w5 wucctauonlychange`year'minus2016 if year == `year'
+	//di "regress `year' to 2016 investment change on `year' to 2016 ucc change (bonus only)"
+	//reg ikchange`year'minus2016_w5 wuccbonusonlychange`year'minus2016 if year == `year'
 	di "regress `year' to 2016 investment change on `year' to 2016 ucc change (tau only) and ucc change (bonus only)"
-	reg ikchange`year'minus2016_w5 wucctauonlychange`year'minus2016 wuccbonusonlychange`year'minus2016 if year == `year'
+	reg ikchange`year'minus2016_w5 wucctauonlychange`year'minus2016 wuccbonusonlychange`year'minus2016 if year == `year', robust
 }
