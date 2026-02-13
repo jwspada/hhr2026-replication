@@ -8,7 +8,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "code" / "ccc_models" / "tauonly"))
 
 import ccc
-print("Tau Only CCC:", ccc.__file__)
+print("Running Tau Only CCC:", ccc.__file__)
 
 from ccc.data import Assets
 from ccc.parameters import Specification, DepreciationParams
