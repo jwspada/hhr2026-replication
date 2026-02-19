@@ -26,6 +26,8 @@ Replication Steps:
     - in STATA, run "main.do", which calls upon:
         - "clean_data.do" to build the final asset-level panel with user cost, tax, and investment/capital variables
         - "regressions.do" to run all regressions and create coefficient figures
+        - "robustness.do" to run robustness regressions
         - "figures.do" to create descriptive figures
+        - "tables.do" to create output for tables
 
     Outputs (tables/figures) are written to: output/
