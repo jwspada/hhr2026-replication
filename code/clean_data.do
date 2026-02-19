@@ -419,7 +419,7 @@ drop if missing(rho_mix)
 // create an asset_id variable
 egen asset_id = group(bea_asset_code)
 
-// trimming and winsorizing at 1, 2.5, 5, and 10%
+// winsorizing at 1, 2.5, 5, and 10%
 foreach var in ikchange2017minus2016 ikchange2018minus2016 ikchange2019minus2016 ikchange2020minus2016 ikchange2021minus2016 ikchange2022minus2016 ikchange2023minus2016 {
 	// 1%
 	winsor2 `var' if bea_asset_code != "COMP", cuts(1 99) suffix(_w1) by(year)
@@ -428,8 +428,6 @@ foreach var in ikchange2017minus2016 ikchange2018minus2016 ikchange2019minus2016
 	winsor2 `var' if bea_asset_code != "COMP", cuts(2.5 97.5) suffix(_w25) by(year)
 	winsor2 `var' if bea_asset_code != "RD21" & bea_asset_code != "RD22" & bea_asset_code != "RD24" & bea_asset_code != "RD25", cuts(2.5 97.5) suffix(_w25comp) by(year)
 	// 5%
-	winsor2 `var' if bea_asset_code != "COMP", cuts(5 95) trim suffix(_t5) by(year)
-	winsor2 `var' if bea_asset_code != "RD21" & bea_asset_code != "RD22" & bea_asset_code != "RD24" & bea_asset_code != "RD25", cuts(5 95) trim suffix(_t5comp) by(year)
 	winsor2 `var' if bea_asset_code != "COMP", cuts(5 95) suffix(_w5) by(year)
 	winsor2 `var' if bea_asset_code != "RD21" & bea_asset_code != "RD22" & bea_asset_code != "RD24" & bea_asset_code != "RD25", cuts(5 95) suffix(_w5comp) by(year)
 	// 10%

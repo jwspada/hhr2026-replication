@@ -18,7 +18,10 @@ do "${code}\clean_data.do"
 *** REGRESSIONS ***
 do "${code}\regressions.do"
 
-*** GRAPHS AND FIGURES ***
+*** ROBUSTNESS ***
+do "${code}\robustness.do"
+
+*** FIGURES AND TABLES ***
 do "${code}\figures.do"
 
 
