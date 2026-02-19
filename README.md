@@ -7,9 +7,8 @@ Replication Steps:
 0) Create and set up environment (Windows)
     - From the repository root, run the following lines in the command prompt:
         - python -m venv .venv
-        - .\\.venv\Scripts\activate
-        - python -m pip install --upgrade pip
-        - python -m pip install -r requirements.txt
+        - .\\.venv\Scripts\python -m pip install -r requirements.txt
+        - .\\.venv\Scripts\python code/main.py
     
 1) Clean BEA investment and capital data and generate user cost data (Python)
     - from repository root, in the command prompt run "python code/main.py", which calls upon:

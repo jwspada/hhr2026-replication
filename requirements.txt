@@ -1,4 +1,6 @@
-pandas
+pandas<3.0
 numpy
 paramtools
 openpyxl
+taxcalc
+behresp
