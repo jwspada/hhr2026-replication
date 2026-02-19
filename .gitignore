@@ -30,7 +30,7 @@ Thumbs.db
 data/ucc/**
 !data/ucc/**/
 !data/ucc/**/.gitkeep
-!data/data_documentation.md/.gitkeep
+!data/data_documentation.md
 data/ucc/snapshot
 
 ####################################
