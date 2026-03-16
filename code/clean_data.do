@@ -314,15 +314,13 @@ bysort bea_asset_code year: egen weighted_noncorp_rho = sum(non_corp_qbi_shar) i
 replace rho_mix = weighted_noncorp_rho if tax_treat == "non-corporate" & !missing(weighted_noncorp_rho)
 drop non_corp_qbi_shar weighted_noncorp_rho
 
-// calculate non-corp ucc with qbi post 2018
-// portion of ucc coming from qbi ucc
-gen non_corp_qbi_shar = .24 * ucc_mix if tax_treat == "non-corporate qbi"
-// portion of ucc coming from standard PSE ucc
-replace non_corp_qbi_shar = .76 * ucc_mix if tax_treat == "non-corporate"
+gen non_corp_qbi_shar = .24 * z_mix if tax_treat == "non-corporate qbi"
+// portion of rho coming from standard PSE ucc
+replace non_corp_qbi_shar = .76 * z_mix if tax_treat == "non-corporate"
 // summing the portions together for non-corp and post TCJA when QBI came into effect
-bysort bea_asset_code year: egen weighted_noncorp_ucc = sum(non_corp_qbi_shar) if tax_treat != "corporate" & year > 2017
-replace ucc_mix = weighted_noncorp_ucc if tax_treat == "non-corporate" & !missing(weighted_noncorp_ucc)
-drop non_corp_qbi_shar weighted_noncorp_ucc
+bysort bea_asset_code year: egen weighted_noncorp_z = sum(non_corp_qbi_shar) if tax_treat != "corporate" & year > 2017
+replace z_mix = weighted_noncorp_z if tax_treat == "non-corporate" & !missing(weighted_noncorp_z)
+drop non_corp_qbi_shar weighted_noncorp_z
 
 // calculate non-corp metr with qbi post 2018
 gen non_corp_qbi_shar = .24 * metr_mix if tax_treat == "non-corporate qbi"

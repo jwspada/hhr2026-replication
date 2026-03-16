@@ -35,7 +35,7 @@ forvalues year = $MIN_YEAR(1)$MAX_YEAR{
 // appendix table 3 panel b
 forvalues year = $MIN_YEAR(1)$MAX_YEAR{
 	di "regress `year' to 2016 investment change on `year' to 2016 metr change"
-	reg ikchange`year'minus2016 wgtd_metrchange`year'minus2016 if year == `year', robust
+	reg ikchange`year'minus2016 wgtd_metrchange`year'minus2016 if year == `year' & bea_asset_code != "COMP", robust
 }
 // 2.5% winsorization
 forvalues year = $MIN_YEAR(1)$MAX_YEAR{
